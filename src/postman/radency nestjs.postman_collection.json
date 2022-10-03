@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "29f1a97a-84ae-4b81-9a34-fc385a95392c",
+		"name": "radency nestjs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20761832"
+	},
+	"item": [
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "notes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}notes",
+							"host": [
+								"{{HOST}}notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}notes/stats",
+							"host": [
+								"{{HOST}}notes"
+							],
+							"path": [
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create note",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonBody = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.environment.set(\"noteId\", jsonBody.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"idea 2\",\r\n    \"created\": \"2022-10-26T13:51:50.417-07:00\",\r\n    \"category\": \"Idea\",\r\n    \"content\": \"View NASA Open APIs\",\r\n    \"dates\": [\"2022-10-26T13:51:50.417-07:00\", \"2022-10-30T13:51:50.417-07:00\"],\r\n    \"noteStatus\": \"archived\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}notes",
+							"host": [
+								"{{HOST}}notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note by ID",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"note content\",\r\n    \"noteStatus\": \"archived\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{HOST}}notes/:id",
+							"host": [
+								"{{HOST}}notes"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{noteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}notes/:id",
+							"host": [
+								"{{HOST}}notes"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{noteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "note by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST}}notes/:id",
+							"host": [
+								"{{HOST}}notes"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{noteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,8 +1,8 @@
 export class CreateNoteDto {
     public name: string;
-    public created: string;
+    public created: Date;
     public category: string;
     public content: string;
-    // public dates: string[];
+    public dates: Date[];
     public noteStatus: string;//not required
 }
