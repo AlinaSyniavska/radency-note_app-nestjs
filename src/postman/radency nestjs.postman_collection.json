@@ -60,7 +60,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"idea 2\",\r\n    \"created\": \"2022-10-26T13:51:50.417-07:00\",\r\n    \"category\": \"Idea\",\r\n    \"content\": \"View NASA Open APIs\",\r\n    \"dates\": [\"2022-10-26T13:51:50.417-07:00\", \"2022-10-30T13:51:50.417-07:00\"],\r\n    \"noteStatus\": \"archived\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Note Random Thought 3\",\r\n    \"created\": \"2022-10-26T13:51:50.417-07:00\",\r\n    \"category\": \"Random Thought\",\r\n    \"content\": \"Random Thought Random Thought Random Thought Random Thought Random Thought\",\r\n    \"dates\": [],\r\n    \"noteStatus\": \"active\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -89,7 +89,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"content\": \"note content\",\r\n    \"noteStatus\": \"archived\"\r\n}",
+							"raw": "{\r\n    \"content\": \"note content 3\",\r\n    \"created\": \"2022-12-05T13:51:50.417-07:00\",\r\n    \"dates\": [\r\n        \"2022-12-05T13:51:50.417-07:00\",\r\n        \"2022-11-15T13:51:50.417-07:00\"\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

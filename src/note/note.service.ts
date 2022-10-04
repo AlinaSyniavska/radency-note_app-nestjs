@@ -1,4 +1,4 @@
-import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable, NotFoundException} from '@nestjs/common';
 import {Note, Prisma} from '@prisma/client';
 
 import {PrismaService} from "../core/prisma.service";
@@ -40,8 +40,10 @@ export class NoteService {
             throw new HttpException('Not valid ID', HttpStatus.BAD_REQUEST);
         }
 
-
-
+        const note = await this.isNotePresent(noteId);
+        if (!note) {
+            throw new NotFoundException();
+        }
 
         return this.prismaService.note.update({
             where: {id: noteId},
