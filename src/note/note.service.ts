@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
 import {Note, Prisma} from '@prisma/client';
 
 import {PrismaService} from "../core/prisma.service";
@@ -15,9 +15,17 @@ export class NoteService {
     }
 
     async getById(noteId: string): Promise<Note> {
-        return this.prismaService.note.findUnique({
-            where: {id: noteId}
-        });
+        const isValidId = this.isValidUUID(noteId);
+        if (!isValidId) {
+            throw new HttpException('Not valid ID', HttpStatus.BAD_REQUEST);
+        }
+
+        const note = await this.isNotePresent(noteId);
+        if (!note) {
+            throw new HttpException(`Note with id ${noteId} not found`, HttpStatus.BAD_REQUEST);
+        }
+
+        return note;
     }
 
     async createNote(data: Prisma.NoteCreateInput): Promise<Note> {
@@ -27,6 +35,14 @@ export class NoteService {
     }
 
     async updateNote(data: UpdateNoteDto, noteId: string): Promise<Note> {
+        const isValidId = this.isValidUUID(noteId);
+        if (!isValidId) {
+            throw new HttpException('Not valid ID', HttpStatus.BAD_REQUEST);
+        }
+
+
+
+
         return this.prismaService.note.update({
             where: {id: noteId},
             data: {
@@ -41,6 +57,16 @@ export class NoteService {
     }
 
     async deleteNote(noteId: string) {
+        const isValidId = this.isValidUUID(noteId);
+        if (!isValidId) {
+            throw new HttpException('Not valid ID', HttpStatus.BAD_REQUEST);
+        }
+
+        const note = await this.isNotePresent(noteId);
+        if (!note) {
+            throw new HttpException(`Note with id ${noteId} not found`, HttpStatus.BAD_REQUEST);
+        }
+
         return this.prismaService.note.delete({
             where: {id: noteId}
         });
@@ -63,6 +89,20 @@ export class NoteService {
                 status: item.noteStatus,
                 total: item._count.noteStatus,
             }
+        });
+    }
+
+    private isValidUUID(id: string): Boolean {
+        const UUID_REGEX_PATTERN = new RegExp("^[{]?[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}[}]?$");
+        if (id == null) {
+            return false;
+        }
+        return UUID_REGEX_PATTERN.test(id);
+    }
+
+    private async isNotePresent(noteId: string): Promise<Note> {
+        return this.prismaService.note.findUnique({
+            where: {id: noteId}
         });
     }
 }
