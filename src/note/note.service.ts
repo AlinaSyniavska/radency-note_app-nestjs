@@ -3,6 +3,7 @@ import {Note, Prisma} from '@prisma/client';
 
 import {PrismaService} from "../core/prisma.service";
 import {UpdateNoteDto} from "./dto/update-note.dto";
+import {IStats} from "../interfaces/statistics.interface";
 
 @Injectable()
 export class NoteService {
@@ -42,6 +43,26 @@ export class NoteService {
     async deleteNote(noteId: string) {
         return this.prismaService.note.delete({
             where: {id: noteId}
+        });
+    }
+
+    async getStatusStatistics(status: string): Promise<IStats[]> {
+        const groupNotes = await this.prismaService.note.groupBy({
+            by: ['category', 'noteStatus'],
+            where: {
+                noteStatus: status,
+            },
+            _count: {
+                noteStatus: true,
+            },
+        })
+
+        return groupNotes.map(item => {
+            return {
+                category: item.category,
+                status: item.noteStatus,
+                total: item._count.noteStatus,
+            }
         });
     }
 }
